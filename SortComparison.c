@@ -23,7 +23,7 @@ void mergeSort(int *arr, int *re, int startIndex, int endIndex);
 
 
 int main() {
-    int number = 100000;
+    int number = 6000;
     int arr[number];
     int arrCopy[number];
     randomData(number, arr);
@@ -51,15 +51,15 @@ int main() {
     double mergeTime = ((double) (endTime2.time - startTime2.time) +
                         (double) (endTime2.millitm - startTime2.millitm) / 1000);
     printf("\n\n\n");
-    printf("%.3lf\n", bubbleTime);
-    printf("%.3lf\n", insertTime);
-    printf("%.3lf\n", selectionTime);
-    printf("%.3lf\n", quickTime);
-    printf("%.3lf\n", mergeTime);
+    printf("%s%.3lf\n", "bubbleTime:", bubbleTime);
+    printf("%s%.3lf\n", "insertTime:", insertTime);
+    printf("%s%.3lf\n", "selectionTime:", selectionTime);
+    printf("%s%.3lf\n", "quickTime:", quickTime);
+    printf("%s%.3lf\n", "mergeTime:", mergeTime);
 
 }
 
-void initial(int number, int origin[], int copy[]) {
+void initial(int number, int *origin, int *copy) {
     for (int i = 0; i < number; ++i) {
         copy[i] = origin[i];
     }
