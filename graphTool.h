@@ -6,20 +6,20 @@
 #include "stdlib.h"
 
 
-//é¡ºåºè¡¨-ç‚¹-ç‚¹è¾¹-ç‚¹è¾¹ (æ—§
-//é¡ºåºè¡¨-ç‚¹-è¾¹-è¾¹-è¾¹ (æ–°
-//é¡¶ç‚¹
+//Ë³Ğò±í-µã-µã±ß-µã±ß (¾É
+//Ë³Ğò±í-µã-±ß-±ß-±ß (ĞÂ
+//¶¥µã
 typedef struct VNode {
     int index;
-    //æŒ‡å‘ä»»ä¸€è¾¹
+    //Ö¸ÏòÈÎÒ»±ß
     struct edge *pEdge;
 } VNode;
 
-//è¾¹
-//å­˜å‚¨è¾¹çš„å‰åèŠ‚ç‚¹æ–¹ä¾¿æˆ‘æŸ¥æ‰¾(ç”¨äºæœ‰å¾…è¿›ä¸€æ­¥ç¡®å®š
-//nextç”¨äºå½¢æˆé“¾è¡¨(å¤©æ‰è®¾è®¡
-//åŒå‘è¾¹çœ‹ä½œä¸¤æ¡ç‹¬ç«‹çš„è¾¹å°±ä¸ä¼šå‡ºç°é‡å¤çš„æƒ…å†µ
-//å­˜å‚¨ä¸¤å¤´çš„èŠ‚ç‚¹å•çº¯ä¸ºäº†æ–¹ä¾¿æˆ‘æŸ¥æ‰¾(åæ­£å†…å­˜ä¸è¦é’±(ä¼˜åŒ–ä»€ä¹ˆçš„ä¸å­˜åœ¨çš„
+//±ß
+//´æ´¢±ßµÄÇ°ºó½Úµã·½±ãÎÒ²éÕÒ(ÓÃÓÚÓĞ´ı½øÒ»²½È·¶¨
+//nextÓÃÓÚĞÎ³ÉÁ´±í(Ìì²ÅÉè¼Æ
+//Ë«Ïò±ß¿´×÷Á½Ìõ¶ÀÁ¢µÄ±ß¾Í²»»á³öÏÖÖØ¸´µÄÇé¿ö
+//´æ´¢Á½Í·µÄ½Úµãµ¥´¿ÎªÁË·½±ãÎÒ²éÕÒ(·´ÕıÄÚ´æ²»ÒªÇ®(ÓÅ»¯Ê²Ã´µÄ²»´æÔÚµÄ
 typedef struct edge {
     VNode *from;
     VNode *to;
@@ -27,27 +27,25 @@ typedef struct edge {
     struct edge *next;
 } UEdge;
 
-//é‚»æ¥è¡¨è¡¨å¤´
-//é¡ºåºè¡¨,ç›®å‰æ²¡ä»€ä¹ˆé—®é¢˜
-//è®°å¾—æŠŠGNodeæ¢å›VNode(æ‚²
+//ÁÚ½Ó±í±íÍ·
 typedef struct graph {
     VNode *graph;
     int capacity;
 } graphStruct;
 
-//æˆå‘˜å˜é‡é‚»æ¥è¡¨
-//æœ€ä¸ä¼šå‡ºé—®é¢˜çš„ä¸€é›†
+//³ÉÔ±±äÁ¿ÁÚ½Ó±í
+//×î²»»á³öÎÊÌâµÄÒ»¼¯
 graphStruct graph;
 
-//å¹¿åº¦éå†ç”¨çš„Queue
-//å†™æˆé“¾è¡¨å½¢å¼(
+//¹ã¶È±éÀúÓÃµÄQueue
+//Ğ´³ÉÁ´±íĞÎÊ½(
 typedef struct QNode {
     VNode *vNode;
     struct QNode *next;
 } QNode;
 QNode head;
 
-//åˆ›å»ºé˜Ÿåˆ—èŠ‚ç‚¹
+//´´½¨¶ÓÁĞ½Úµã
 QNode *createQNode(VNode *vNode) {
     QNode *qNode = malloc(sizeof(QNode));
     qNode->vNode = vNode;
@@ -55,8 +53,8 @@ QNode *createQNode(VNode *vNode) {
     return qNode;
 }
 
-//æ‰¾é˜Ÿå°¾
-//è¿”å›æœ€åä¸€ä¸ªèŠ‚ç‚¹
+//ÕÒ¶ÓÎ²
+//·µ»Ø×îºóÒ»¸ö½Úµã
 QNode *findLast() {
     QNode *qNode = &head;
     while (qNode->next != NULL) {
@@ -65,8 +63,8 @@ QNode *findLast() {
     return qNode;
 }
 
-//åˆ¤æ–­é˜Ÿç©º
-//0ä¸ºç©º,1ä¸ºéç©º
+//ÅĞ¶Ï¶Ó¿Õ
+//0Îª¿Õ,1Îª·Ç¿Õ
 int emptyOrNot() {
     if (head.next == NULL) {
         return 0;
@@ -74,61 +72,76 @@ int emptyOrNot() {
     return 1;
 }
 
-//åˆå§‹åŒ–é˜Ÿåˆ—
+//³õÊ¼»¯¶ÓÁĞ
 int initQueue() {
+    head.vNode = NULL;
     head.next = NULL;
     return 1;
 }
 
-//å…¥é˜Ÿ
+//Èë¶Ó
 int enQueue(VNode *vNode) {
     QNode *qNode = findLast();
     qNode->next = createQNode(vNode);
     return 1;
 }
 
-//å‡ºé˜Ÿ
-//ä½†æ˜¯æ²¡free,è®°å¾—è°ƒç”¨çš„æ—¶å€™freeæ‰
-QNode *deQueue() {
+//³ö¶Ó
+int deQueue() {
     QNode *qNode = head.next;
+    if (head.next->next == NULL) {
+        head.next = NULL;
+        free(qNode);
+        return 1;
+    }
     head.next = head.next->next;
-    return qNode;
+    free(qNode);
+    return 1;
 }
 
-//åˆ›å»ºé‚»æ¥è¡¨æœ¬ä½“ï¼Œéœ€æŒ‡å®šå¤§å°(èŠ‚ç‚¹æ•°)
+//×î¶ÌÂ·¾¶Ëã·¨ÓÃ½Úµã
+//visit±íÊ¾·ÃÎÊ×´Ì¬£¬1Îª·ÃÎÊ¹ı£¬0ÎªÎ´·ÃÎÊ
+typedef struct DNode {
+    int visit;
+    int distance;
+    VNode *preVNode;
+} DNode;
+
+//´´½¨ÁÚ½Ó±í±¾Ìå£¬ĞèÖ¸¶¨´óĞ¡(½ÚµãÊı)
 graphStruct createGraph(int capacity) {
     graph.graph = malloc(capacity * sizeof(VNode));
     int i = 0;
-    //æ‰‹åŠ¨æŠŠæ‰€æœ‰VNodeçš„ç´¢å¼•éƒ½åˆå§‹åŒ–æˆ-1(ä»€ä¹ˆæ ‡è®°æ³•
-    while (i != capacity - 1) {
+    //ÊÖ¶¯°ÑËùÓĞVNodeµÄË÷Òı¶¼³õÊ¼»¯³É-1(Ê²Ã´±ê¼Ç·¨
+    while (i != capacity) {
         graph.graph[i].index = -1;
+        graph.graph[i].pEdge = NULL;
         i++;
     }
-    //ç»å…¸é¡ºåºè¡¨
+    //¾­µäË³Ğò±í
     graph.capacity = capacity;
     return graph;
 }
 
 
-//å‘é‚»æ¥è¡¨ä¸­æ·»åŠ æœªæ·»åŠ è¿‡çš„èŠ‚ç‚¹,å¹¶èµ‹ç´¢å¼•å€¼
-//ç´¢å¼•åˆå€¼ä¸º-1
+//ÏòÁÚ½Ó±íÖĞÌí¼ÓÎ´Ìí¼Ó¹ıµÄ½Úµã,²¢¸³Ë÷ÒıÖµ
+//Ë÷Òı³õÖµÎª-1
 int addNodeToAdjacencyList(VNode *vNode) {
     int i = 0;
-    while (i != graph.capacity - 1) {
+    while (i < graph.capacity) {
         if (graph.graph[i].index == -1) {
-            graph.graph[i] = *vNode;
             vNode->index = i;
-            //æ‰¾åˆ°ç©ºä½å¹¶è¿”å›å¯¹åº”ç´¢å¼•
-            return vNode->index;
+            graph.graph[i] = *vNode;
+            //ÕÒµ½¿ÕÎ»²¢·µ»Ø¶ÔÓ¦Ë÷Òı
+            return i;
         }
         i++;
     }
-    //æ”¾å…¥é‚»æ¥è¡¨å¤±è´¥è¿”å›è´Ÿå€¼
+    //·ÅÈëÁÚ½Ó±íÊ§°Ü·µ»Ø¸ºÖµ
     return -1;
 }
 
-//æ£€æŸ¥é‚»æ¥è¡¨ä¸­æ˜¯å¦å«æœ‰èŠ‚ç‚¹,å¦‚æœæœ‰è¿”å›ç´¢å¼•å€¼
-//ç´¢å¼•åˆå€¼ä¸º-1
+//¼ì²éÁÚ½Ó±íÖĞÊÇ·ñº¬ÓĞ½Úµã,Èç¹ûÓĞ·µ»ØË÷ÒıÖµ
+//Ë÷Òı³õÖµÎª-1
 int checkInList(VNode *vNode) {
     int i = 0;
     while (i != graph.capacity - 1) {
@@ -140,9 +153,9 @@ int checkInList(VNode *vNode) {
     return -1;
 }
 
-//åˆ›å»ºå¹¶åˆå§‹åŒ–èŠ‚ç‚¹
-//ç´¢å¼•åˆå€¼ä¸º-1
-//ç›´æ¥æ·»åŠ è¿›é‚»æ¥è¡¨
+//´´½¨²¢³õÊ¼»¯½Úµã
+//Ë÷Òı³õÖµÎª-1
+//Ö±½ÓÌí¼Ó½øÁÚ½Ó±í
 VNode *createNode() {
     VNode *vNode = malloc(sizeof(VNode));
     vNode->index = -1;
@@ -151,18 +164,18 @@ VNode *createNode() {
     return vNode;
 }
 
-//æ ¹æ®edgeçš„fromèŠ‚ç‚¹åˆ›å»ºå¹¶åˆå§‹åŒ–è¾¹
-UEdge *createEdge(VNode *from, VNode *to, int weight) {
+//¸ù¾İedgeµÄfrom½Úµã´´½¨²¢³õÊ¼»¯±ß
+UEdge *createEdge(int fromIndex, int toIndex, int weight) {
     UEdge *uEdge = malloc(sizeof(UEdge));
-    uEdge->from = from;
-    uEdge->to = to;
+    uEdge->from = &graph.graph[fromIndex];
+    uEdge->to = &graph.graph[toIndex];
     uEdge->weight = weight;
     uEdge->next = NULL;
     return uEdge;
 }
 
-//ä¸€é”®æ‰¾åˆ°è¾¹é“¾è¡¨çš„æœ€åçš„è½®æ¤…â™¿,å¸…!otto!
-//é¿å…ä¸äº†æ–°çš„VNodeæ²¡æœ‰UEdgeçš„é—®é¢˜
+//Ò»¼üÕÒµ½±ßÁ´±íµÄ×îºóµÄÂÖÒÎ?,Ë§!otto!
+//±ÜÃâ²»ÁËĞÂµÄVNodeÃ»ÓĞUEdgeµÄÎÊÌâ
 UEdge *findLastGNode(VNode *vNode) {
     if (checkInList(vNode) < 0) {
         addNodeToAdjacencyList(vNode);
@@ -174,50 +187,53 @@ UEdge *findLastGNode(VNode *vNode) {
     return uEdge;
 }
 
-//dirç”¨äºè¡¨ç¤ºè¾¹çš„æœ‰å‘æ— å‘ï¼Œ0è¡¨ç¤ºæœ‰å‘ï¼Œ1è¡¨ç¤ºæ— å‘(åŒå‘)
-//é€šè¿‡é€’å½’è°ƒç”¨å®ç°æ— å‘å›¾(åŒå‘è¾¹)
-int addEdgeToAdjacencyList(VNode *from, VNode *to, int weight, int dir) {
+//dirÓÃÓÚ±íÊ¾±ßµÄÓĞÏòÎŞÏò£¬0±íÊ¾ÓĞÏò£¬1±íÊ¾ÎŞÏò(Ë«Ïò)
+//Í¨¹ıµİ¹éµ÷ÓÃÊµÏÖÎŞÏòÍ¼(Ë«Ïò±ß)
+int addEdgeToAdjacencyList(int fromIndex, int toIndex, int weight, int dir) {
+    VNode *from = &graph.graph[fromIndex];
+    VNode *to = &graph.graph[toIndex];
     if (checkInList(to) < 0) {
         addNodeToAdjacencyList(to);
     }
-    //æ–°å»ºä¸€æ¡edgeå¹¶æ”¾å…¥fromèŠ‚ç‚¹å­˜å‚¨edgeçš„è¡¨çš„æœ«å°¾
-    //åˆ¤æ–­fromæ˜¯å¦å·²æœ‰UEdgeèŠ‚ç‚¹,å¦‚æœæœ‰å°±ç›´æ¥åŠ å…¥
+    //ĞÂ½¨Ò»Ìõedge²¢·ÅÈëfrom½Úµã´æ´¢edgeµÄ±íµÄÄ©Î²
+    //ÅĞ¶ÏfromÊÇ·ñÒÑÓĞUEdge½Úµã,Èç¹ûÓĞ¾ÍÖ±½Ó¼ÓÈë
     if (from->pEdge == NULL) {
-        from->pEdge = createEdge(from, to, weight);
+        from->pEdge = createEdge(from->index, to->index, weight);
     } else {
-        findLastGNode(from)->next = createEdge(from, to, weight);
+        findLastGNode(from)->next = createEdge(from->index, to->index, weight);
     }
-    //å®ç°æ— å‘å›¾åŒå‘è¾¹
+    //ÊµÏÖÎŞÏòÍ¼Ë«Ïò±ß
     if (dir) {
-        addEdgeToAdjacencyList(to, from, weight, 0);
+        addEdgeToAdjacencyList(toIndex, fromIndex, weight, 0);
     }
     return 1;
 }
 
-//å¹¿åº¦éå†
+//¹ã¶È±éÀú
 int breathFirstSearch(int *arr, VNode *vNode) {
-    arr[vNode->index] = 1;
-    enQueue(vNode);
+    printf("%d >> ", vNode->index);
     UEdge *uEdge = vNode->pEdge;
-    while (uEdge->next != NULL) {
-        if (!arr[uEdge->to->index]) {
+    while (uEdge != NULL) {
+        if (arr[uEdge->to->index] == 0) {
             enQueue(uEdge->to);
+            arr[uEdge->to->index] = 1;
         }
         uEdge = uEdge->next;
     }
+    deQueue();
     if (!emptyOrNot()) {
         return 1;
     }
-    breathFirstSearch(arr, deQueue()->vNode);
-    free(vNode);
+    breathFirstSearch(arr, head.next->vNode);
     return 1;
 }
 
-//æ·±åº¦éå†
+//Éî¶È±éÀú
 int depthFirstSearch(int *arr, VNode *vNode) {
     arr[vNode->index] = 1;
+    printf("%d >> ", vNode->index);
     UEdge *uEdge = vNode->pEdge;
-    while (uEdge->next != NULL) {
+    while (uEdge != NULL) {
         if (!arr[uEdge->to->index]) {
             depthFirstSearch(arr, uEdge->to);
         }
@@ -226,28 +242,142 @@ int depthFirstSearch(int *arr, VNode *vNode) {
     return 1;
 }
 
-//ä¸¤ç§éå†çš„ä¸­è½¬å‡½æ•°
-//0å»å¹¿åº¦éå†
-//1å»æ·±åº¦éå†
-//ç¥ç»ç—…å•Šå¹²å˜›è¦è¿™ä¹ˆå†™
-//è—çš„è¿™ä¹ˆæ·±åˆ«äººæ‹¿å¤´çœ‹=(
+//Á½ÖÖ±éÀúµÄÖĞ×ªº¯Êı
+//0È¥¹ã¶È±éÀú
+//1È¥Éî¶È±éÀú
+//Éñ¾­²¡°¡¸ÉÂïÒªÕâÃ´Ğ´
+//²ØµÄÕâÃ´Éî±ğÈËÄÃÍ·¿´=(
 int traversalGraph(int type) {
-    //å­˜å‚¨è®¿é—®çŠ¶æ€çš„æ•°ç»„
-    //1ä¸ºå·²ç»è¢«è®¿é—®è¿‡
-    //0ä¸ºæœªè¢«è®¿é—®
+    //´æ´¢·ÃÎÊ×´Ì¬µÄÊı×é
+    //1ÎªÒÑ¾­±»·ÃÎÊ¹ı
+    //0ÎªÎ´±»·ÃÎÊ
     int arr[graph.capacity];
     for (int i = 0; i < graph.capacity; ++i) {
         arr[i] = 0;
     }
     switch (type) {
         case 0:
+            printf("¹ã¶ÈÓÅÏÈ±éÀú:\n");
+            initQueue();
+            enQueue(graph.graph);
             breathFirstSearch(arr, &graph.graph[0]);
+            printf("\n\n");
             break;
         case 1:
+            printf("Éî¶ÈÓÅÏÈ±éÀú:\n");
             depthFirstSearch(arr, &graph.graph[0]);
+            printf("\n\n");
             break;
         default:
     }
     return 1;
 
 }
+
+//»ùÓÚÉî¶ÈÓÅÏÈËã·¨µÄÍØÆËÅÅĞò
+int topologicalSort() {
+    printf("ÍØÆËÅÅĞò»ùÓÚ\n");
+    traversalGraph(1);
+    return 1;
+}
+
+//DijkstraËã·¨
+//×öÒ»¸ö¹ã¶È±éÀú,²¢¼ÆËãÈ¨
+int dijkstra(DNode *dis, VNode *vNode) {
+    UEdge *uEdge = vNode->pEdge;
+    while (uEdge != NULL) {
+        //¼ÇÂ¼ÔİÊ±´æ´¢´Ó´Ë½Úµãµ½ºó¼ÌµÄ¾àÀëÖµ,ºóĞø½øĞĞ±È½Ï
+        int TDis = dis[vNode->index].distance + uEdge->weight;
+        //Î´·ÃÎÊ¹ı¾Í½«ÔİÊ±Öµ¸³Îª³õÖµ,²¢¼ÇÂ¼µ±Ç°½ÚµãÎªÇ°Çı
+        if (dis[uEdge->to->index].visit == 0) {
+            enQueue(uEdge->to);
+            dis[uEdge->to->index].distance = TDis;
+            dis[uEdge->to->index].preVNode = vNode;
+            dis[uEdge->to->index].visit = 1;
+        } else {
+            //·ÃÎÊ¹ıÔòÅĞ¶Ïºó¼Ì½ÚµãµÄ¾àÀëÖµºÍÔİÊ±Öµ½øĞĞ±È½Ï,²¢Ñ¡ÔñĞ¡µÄ¸ºÖµ²¢¼ÇÂ¼Ç°Çı½Úµã
+            if (TDis < dis[uEdge->to->index].distance) {
+                dis[uEdge->to->index].distance = TDis;
+                dis[uEdge->to->index].preVNode = vNode;
+            }
+        }
+        uEdge = uEdge->next;
+    }
+    deQueue();
+    if (!emptyOrNot()) {
+        return 1;
+    }
+    dijkstra(dis, head.next->vNode);
+
+    return 1;
+}
+
+//DijkstraËã·¨Ç°ÖÃ
+int preDijkstra() {
+    printf("DijkstraËã·¨\n");
+    DNode dis[graph.capacity];
+    //¸³³õÖµ
+    for (int i = 0; i < graph.capacity; ++i) {
+        dis[i].visit = 0;
+        dis[i].preVNode = &graph.graph[i];
+    }
+    initQueue();
+    enQueue(graph.graph);
+    dis[0].distance = 0;
+    dijkstra(dis, dis->preVNode);
+    //´òÓ¡×î¶ÌÂ·¾¶ºÍÇ°Çı
+    for (int i = 1; i < graph.capacity; ++i) {
+        printf("½Úµã:%d->[%d,%d]  ", i + 1, dis[i].preVNode->index + 1, dis[i].distance);
+    }
+    printf("\n");
+    return 1;
+}
+
+//´òÓ¡ÁÚ½Ó±í
+//Ö÷Òª´òÓ¡Ë÷Òı
+//ÓÃ->·Ö¸î
+//^½áÎ²
+int printAdjacencyList() {
+    printf("´òÓ¡ÁÚ½Ó±í\n");
+    for (int i = 0; i < graph.capacity; ++i) {
+        printf("%d-> ", graph.graph[i].index);
+        if (graph.graph[i].pEdge == NULL) {
+            printf("^\n");
+            continue;
+        }
+        UEdge *uEdge = graph.graph[i].pEdge;
+        while (uEdge != NULL) {
+            printf("%d-> ", uEdge->to->index);
+            uEdge = uEdge->next;
+        }
+        printf(" ^\n");
+    }
+    printf("\n");
+    return 0;
+}
+
+//ÍùÁÚ½Ó±íÀïÈû¶«Î÷
+//ÓĞÏòÍ¼
+int initialGraph() {
+    createGraph(5);
+    //Ìí¼Ó½Úµã
+    createNode();//0
+    createNode();//1
+    createNode();//2
+    createNode();//3
+    createNode();//4
+    //Ìí¼Ó±ß
+    //1½ÚµãµÄ±ß
+    addEdgeToAdjacencyList(0, 1, 4, 0);
+    addEdgeToAdjacencyList(0, 3, 5, 0);
+    //2½ÚµãµÄ±ß
+    addEdgeToAdjacencyList(1, 4, 1, 0);
+    addEdgeToAdjacencyList(1, 2, 3, 0);
+    //3½ÚµãµÄ±ß
+    //4½ÚµãµÄ±ß
+    addEdgeToAdjacencyList(3, 2, 2, 0);
+    //5½ÚµãµÄ±ß
+    addEdgeToAdjacencyList(4, 2, 3, 0);
+    return 0;
+}
+
